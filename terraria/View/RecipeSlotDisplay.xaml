@@ -1,0 +1,85 @@
+<UserControl x:Class="WPFTerraria.View.RecipeSlotDisplay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-
+compatibility/2006"
+              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+              xmlns:local="clr-namespace:WPFTerraria.View"
+              mc:Ignorable="d"
+              d:DesignHeight="380" d:DesignWidth="80">
+    <Grid>
+        <Border CornerRadius="8" Background="#222A" BorderBrush="#555"
+BorderThickness="1"/>
+
+        <Grid Margin="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="8"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Output slot look -->
+            <Grid Grid.Column="0" Width="64" Height="64">
+                <Image x:Name="SlotBg" Stretch="Fill" Opacity="0.9"/>
+                <Image x:Name="OutputImage" Width="44" Height="44"
+Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock x:Name="OutputQty" Text="x1"
+HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,4,2"
+                   Foreground="White" FontWeight="Bold" FontSize="12"/>
+            </Grid>
+
+            <!-- Name + ingredients -->
+            <StackPanel Grid.Column="2" Orientation="Vertical">
+                <TextBlock x:Name="OutputName" Text="Item Name"
+FontWeight="Bold" Foreground="White" />
+                <ItemsControl x:Name="IngredientsList" Margin="0,6,0,0">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Width="42" Height="42" Margin="0,0,6,0">
+                                <Image x:Name="SmallSlotBg" Stretch="Fill"/>
+                                <Image Source="{Binding Item.Image}"
+Width="28" Height="28" Stretch="Uniform" HorizontalAlignment="Center"
+VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding Amount}"
+HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,4,2"
+
+                          Foreground="White" FontWeight="Bold"
+FontSize="11"/>
+                           </Grid>
+                       </DataTemplate>
+                   </ItemsControl.ItemTemplate>
+               </ItemsControl>
+           </StackPanel>
+
+            <!-- Buttons -->
+            <StackPanel Grid.Column="3" Orientation="Vertical"
+VerticalAlignment="Center" Margin="8,0,0,0">
+                <Button x:Name="CraftOneBtn" Content="Craft" Padding="10,4"
+Margin="0,0,0,6"/>
+                <Button x:Name="CraftAllBtn" Content="Craft All"
+Padding="10,4"/>
+            </StackPanel>
+
+            <!-- Unavailable overlay -->
+            <Border x:Name="UnavailableOverlay"
+            Grid.RowSpan="999"
+            Grid.ColumnSpan="999"
+            Background="#77000000"
+            CornerRadius="8"
+            Visibility="Collapsed"
+            Panel.ZIndex="999">
+        <TextBlock Text="{Binding MissingReason}"
+                   Foreground="White"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+    </Border>
+        </Grid>
+    </Grid>
+</UserControl>
